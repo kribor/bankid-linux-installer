@@ -1,0 +1,2 @@
+bankid-linux-installer
+======================
