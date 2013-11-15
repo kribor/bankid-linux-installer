@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 CONTINUE = true;
 UNINSTALL = false; #Used to uninstall on cleanup if installation failed to avoid half-installed state 
@@ -36,7 +36,7 @@ fi
 if $CONTINUE && [ `getconf LONG_BIT` = "64" ]; then
   echo "Detected 64-bit installation - installing additional packages"
 
-  UBUNTU_VERSION = $(lsb_release -d -s |  awk '{print $2}')
+  UBUNTU_VERSION=$(lsb_release -d -s |  awk '{print $2}')
 
   if [[ $UBUNTU_VERSION == 12.04* ]] || [[ $UBUNTU_VERSION == 12.10* ]] || [[ $UBUNTU_VERSION == 13.04* ]]; then
   	echo "Ubuntu $UBUNTU_VERSION detected, running customized installation"
