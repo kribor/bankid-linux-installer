@@ -52,6 +52,7 @@ if [ CONTINUE && `getconf LONG_BIT` = "64" ]; then
     else
       echo "Plugin wrapper successfully installed"
     fi
+  fi
 fi
 
 if [ UNINSTALL ]; then
