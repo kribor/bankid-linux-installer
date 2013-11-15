@@ -19,7 +19,8 @@ rm -f install-bankid.sh
 
 
 Tested OSes
-==============
+===========
 Ubuntu 12.04 Precise Pangolin 32-bit
 Ubuntu 12.04 Precise Pangolin 64-bit
 Ubuntu 13.10 Saucy Salamander 32-bit
+Ubuntu 13.10 Saucy Salamander 64-bit

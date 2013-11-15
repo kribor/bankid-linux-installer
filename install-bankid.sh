@@ -23,7 +23,7 @@ else
   echo "Extraction completed"	
 fi
 
-if [ CONTINUE ]; then
+if $CONTINUE ; then
   echo "Installing nexus"
   cd BISP-*
   sudo ./install* i
@@ -33,29 +33,58 @@ if [ CONTINUE ]; then
   fi
 fi
 
-if [ CONTINUE && `getconf LONG_BIT` = "64" ]; then
+if $CONTINUE && [ `getconf LONG_BIT` = "64" ]; then
   echo "Detected 64-bit installation - installing additional packages"
-  sudo apt-get install -y nspluginwrapper libstdc++6:i386 libidn11:i386
-  if [ $? -ne 0 ]; then
-    echo "ERROR: Operation failed. Installation incomplete."
-    CONTINUE = false;
-    UNINSTALL = true;
-  else
-  	echo "Additional packages installed"
-  fi
-  if [ CONTINUE ]; then
-    echo "Installing plugin wrapper..."
-    sudo nspluginwrapper -i /usr/local/lib/personal/libplugins.so
+
+  UBUNTU_VERSION = $(lsb_release -d -s |  awk '{print $2}')
+
+  if [[ $UBUNTU_VERSION == 12.04* ]] || [[ $UBUNTU_VERSION == 12.10* ]] || [[ $UBUNTU_VERSION == 13.04* ]]; then
+  	echo "Ubuntu $UBUNTU_VERSION detected, running customized installation"
+    sudo apt-get install -y nspluginwrapper libstdc++6:i386 libidn11:i386
     if [ $? -ne 0 ]; then
       echo "ERROR: Operation failed. Installation incomplete."
+      CONTINUE = false;
       UNINSTALL = true;
     else
-      echo "Plugin wrapper successfully installed"
+    	echo "Additional packages installed"
+    fi
+    if $CONTINUE ; then
+      echo "Installing plugin wrapper..."
+      sudo nspluginwrapper -i /usr/local/lib/personal/libplugins.so
+      if [ $? -ne 0 ]; then
+        echo "ERROR: Operation failed. Installation incomplete."
+        UNINSTALL = true;
+      else
+        echo "Plugin wrapper successfully installed"
+      fi
     fi
   fi
+  if [[ $UBUNTU_VERSION == 13.10* ]]; then
+  	echo "Ubuntu $UBUNTU_VERSION detected, running customized installation"
+    sudo apt-get install -y nspluginwrapper pcscd:i386 pkcs11-data:i386 libstdc++6:i386 libidn11:i386
+    if [ $? -ne 0 ]; then
+      echo "ERROR: Operation failed. Installation incomplete."
+      CONTINUE = false;
+      UNINSTALL = true;
+    else
+    	echo "Additional packages installed"
+    fi
+    if $CONTINUE ; then
+      echo "Installing plugin wrapper..."
+      sudo nspluginwrapper -i /usr/local/lib/personal/libplugins.so
+      if [ $? -ne 0 ]; then
+        echo "ERROR: Operation failed. Installation incomplete."
+        UNINSTALL = true;
+      else
+        echo "Plugin wrapper successfully installed"
+      fi
+    fi
+  fi
+
+
 fi
 
-if [ UNINSTALL ]; then
+if $UNINSTALL ; then
   echo "Uninstalling nexus since 64-bit wrapper installation failed"
   cd /tmp/BISP*
   sudo ./install* u
