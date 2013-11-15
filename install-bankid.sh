@@ -23,7 +23,7 @@ else
   echo "Extraction completed"	
 fi
 
-if [ CONTINUE ]
+if [ CONTINUE ]; then
   echo "Installing nexus"
   cd BISP-*
   sudo ./install* i
@@ -43,7 +43,7 @@ if [ CONTINUE && `getconf LONG_BIT` = "64" ]; then
   else
   	echo "Additional packages installed"
   fi
-  if [ CONTINUE ]
+  if [ CONTINUE ]; then
     echo "Installing plugin wrapper..."
     sudo nspluginwrapper -i /usr/local/lib/personal/libplugins.so
     if [ $? -ne 0 ]; then
@@ -54,7 +54,7 @@ if [ CONTINUE && `getconf LONG_BIT` = "64" ]; then
     fi
 fi
 
-if [ UNINSTALL ]
+if [ UNINSTALL ]; then
   echo "Uninstalling nexus since 64-bit wrapper installation failed"
   cd /tmp/BISP*
   sudo ./install* u
