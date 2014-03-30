@@ -36,7 +36,7 @@ fi
 if $CONTINUE && [ `getconf LONG_BIT` = "64" ]; then
   echo "Detected 64-bit installation - installing additional packages"
 
-  UBUNTU_VERSION=$(lsb_release -d -s |  awk '{print $2}')
+  UBUNTU_VERSION=lsb_release -a | grep Release | awk '{print $2}'
 
   if [[ $UBUNTU_VERSION == 12.04* ]] || [[ $UBUNTU_VERSION == 12.10* ]] || [[ $UBUNTU_VERSION == 13.04* ]]; then
   	echo "Ubuntu $UBUNTU_VERSION detected, running customized installation"
@@ -59,7 +59,7 @@ if $CONTINUE && [ `getconf LONG_BIT` = "64" ]; then
       fi
     fi
   fi
-  if [[ $UBUNTU_VERSION == 13.10* ]]; then
+  if [[ $UBUNTU_VERSION == 13.10* || [[ $UBUNTU_VERSION == 14.04* ]]]]; then
   	echo "Ubuntu $UBUNTU_VERSION detected, running customized installation"
     sudo apt-get install -y nspluginwrapper pcscd:i386 pkcs11-data:i386 libstdc++6:i386 libidn11:i386
     if [ $? -ne 0 ]; then
