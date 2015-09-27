@@ -1,3 +1,10 @@
+Broken - bankid no longer supports linux
+======================
+
+I recommend mobile bankid or possibly running mobile bankid in chrome as described here (Swedish):
+
+https://wiki.ubuntu.com/SwedishTeam/Support/BankID_i_Linux_genom_Google_Chrome 
+
 bankid-linux-installer
 ======================
 
